@@ -16,7 +16,7 @@ import { booleanAttribute, Component, input, model, output } from '@angular/core
         <span
           class="checkmark select-none cursor-pointer absolute size-full border-2 border-neutral-300 dark:border-neutral-700
           rounded-full flex items-center justify-center font-extrabold"
-          (click)="onCheckedChanged(!checked())"
+          (click)="checked.set(!checked())"
         >
           @if (checked()) {
             ✓
@@ -27,6 +27,10 @@ import { booleanAttribute, Component, input, model, output } from '@angular/core
       <div class="content flex-1 overflow-hidden text-ellipsis">
         <ng-content></ng-content>
       </div>
+
+      @if (!isInput()) {
+        <button class="cursor-pointer" (click)="onDelete.emit()">✗</button>
+      }
     </li>
   `,
   styles: `
@@ -53,10 +57,5 @@ export class TodoItem {
 
   checked = model(false);
 
-  changed = output<boolean>({ alias: 'valueChanged' });
-
-  protected onCheckedChanged(value: boolean) {
-    this.checked.set(value);
-    this.changed.emit(value);
-  }
+  onDelete = output<void>();
 }

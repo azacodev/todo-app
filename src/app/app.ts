@@ -53,4 +53,8 @@ export class App {
     this.newItem.set('');
     this.todoInput()?.checked.set(false);
   }
+
+  deleteItem(id: string): void {
+    this.items.set(this.items().filter((item) => item.id !== id));
+  }
 }

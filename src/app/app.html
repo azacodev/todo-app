@@ -20,7 +20,9 @@
       <todo-list>
         <todo-header [length]="filteredItems().length"></todo-header>
         @for (item of filteredItems(); track item.id) {
-          <todo-item [(checked)]="item.completed"> {{ item.title }} </todo-item>
+          <todo-item [(checked)]="item.completed" (onDelete)="deleteItem(item.id)">
+            {{ item.title }}
+          </todo-item>
         } @empty {
           <p class="text-center dark:text-neutral-400 py-8">No hay tareas por hacer</p>
         }
