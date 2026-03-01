@@ -1,0 +1,29 @@
+<div class="container mx-auto flex size-full flex-col lg:max-w-xl">
+  <header class="py-4">
+    <h1 class="text-4xl font-semibold tracking-widest">TODO</h1>
+  </header>
+
+  <todo-item isInput #todoInput>
+    <input
+      type="text"
+      [(ngModel)]="newItem"
+      #ctrl="ngModel"
+      class="w-full border-none outline-none"
+      placeholder="Crea una nueva tarea..."
+      appEnterKey
+      (enterPressed)="addItem(todoInput.checked())"
+    />
+  </todo-item>
+
+  <main class="flex-1 overflow-auto py-4">
+    <div>
+      <todo-list>
+        @for (item of items(); track item.id) {
+          <todo-item [(checked)]="item.completed"> {{ item.title }} </todo-item>
+        } @empty {
+          <p class="text-center dark:text-neutral-400 py-8">No hay tareas por hacer</p>
+        }
+      </todo-list>
+    </div>
+  </main>
+</div>
