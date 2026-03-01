@@ -32,7 +32,7 @@ export enum Filter {
         </button>
       </div>
 
-      <p>{{ length() }} Tareas</p>
+      <p>{{ length() }} Tarea{{ length() === 1 ? '' : 's' }}</p>
     </header>
   `,
   styles: `
