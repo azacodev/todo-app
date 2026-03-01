@@ -7,6 +7,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       class="rounded-lg size-full border border-neutral-300
       dark:border-neutral-700 divide-y divide-neutral-300 dark:divide-neutral-700 overflow-hidden"
     >
+      <ng-content select="todo-header"></ng-content>
       <ng-content></ng-content>
     </ul>
   `,

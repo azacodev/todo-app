@@ -18,7 +18,8 @@
   <main class="flex-1 overflow-auto py-4">
     <div>
       <todo-list>
-        @for (item of items(); track item.id) {
+        <todo-header [length]="filteredItems().length"></todo-header>
+        @for (item of filteredItems(); track item.id) {
           <todo-item [(checked)]="item.completed"> {{ item.title }} </todo-item>
         } @empty {
           <p class="text-center dark:text-neutral-400 py-8">No hay tareas por hacer</p>
