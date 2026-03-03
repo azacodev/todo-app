@@ -1,4 +1,4 @@
-import { Component, computed, signal, viewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, viewChild } from '@angular/core';
 import { TodoList } from './todo/todo-list/todo-list';
 import { TodoItem } from './todo/todo-item/todo-item';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { Filter, TodoHeader } from './todo/todo-header/todo-header';
     class: 'size-full flex flex-col',
   },
 })
-export class App {
+export class App implements OnInit {
   todoInput = viewChild<TodoItem>('todoInput');
 
   todoHeader = viewChild(TodoHeader);
@@ -39,6 +39,15 @@ export class App {
     }
   });
 
+  ngOnInit(): void {
+    this.items.set(this.getStoredItems());
+  }
+
+  protected getStoredItems(): Todo[] {
+    const storedItems = localStorage.getItem('todos');
+    return storedItems ? JSON.parse(storedItems) : [];
+  }
+
   protected addItem(checked: boolean): void {
     const value = this.newItem().trim();
     if (!value) {
@@ -50,11 +59,14 @@ export class App {
       { id: Date.now().toString(), title: value, completed: checked },
     ]);
 
+    localStorage.setItem('todos', JSON.stringify(this.items()));
+
     this.newItem.set('');
     this.todoInput()?.checked.set(false);
   }
 
   deleteItem(id: string): void {
     this.items.set(this.items().filter((item) => item.id !== id));
+    localStorage.setItem('todos', JSON.stringify(this.items()));
   }
 }
